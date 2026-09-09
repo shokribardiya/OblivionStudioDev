@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oblivion Sentinel | Security Intelligence Platform</title>
+<meta name="description" content="Oblivion Sentinel is a security intelligence platform designed to correlate signals, analyze relationships, investigate potential threats, and provide structured context for authorized defensive security operations.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://shokribardiya.github.io/Oblivions0.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Oblivion Sentinel | Security Intelligence Platform">
+<meta property="og:description" content="A security intelligence platform designed to correlate signals, identify relationships, and turn fragmented security information into a structured operational picture.">
+<meta property="og:url" content="https://shokribardiya.github.io/Oblivions0.github.io/">
+<meta property="og:site_name" content="Oblivion">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Oblivion Sentinel | Security Intelligence Platform">
+<meta name="twitter:description" content="A security intelligence platform designed to correlate signals, identify relationships, and turn fragmented security information into a structured operational picture.">
+<meta name="theme-color" content="#05060a">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Oblivion",
+  "url": "https://shokribardiya.github.io/Oblivions0.github.io/",
+  "logo": "https://shokribardiya.github.io/Oblivions0.github.io/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Oblivion Sentinel",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "N/A",
+  "applicationSubCategory": "Security Intelligence Platform",
+  "description": "Oblivion Sentinel is a security intelligence platform in active development, designed to correlate signals, analyze relationships, and support authorized defensive security investigation and response workflows.",
+  "releaseNotes": "Prototype / active development",
+  "publisher": { "@type": "Organization", "name": "Oblivion" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Oblivion Sentinel",
+  "url": "https://shokribardiya.github.io/Oblivions0.github.io/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Oblivion", "item": "https://shokribardiya.github.io/Oblivions0.github.io/" },
+    { "@type": "ListItem", "position": 2, "name": "Sentinel" }
+  ]
+}
+</script>
+<style>
+  :root{
+    --bg:#05060a;
+    --bg2:#090b11;
+    --ink:#eef1f6;
+    --muted:#828a9a;
+    --dim:#4d5361;
+    --line:rgba(255,255,255,0.07);
+    --line-strong:rgba(255,255,255,0.14);
+    --orange:#ff7a3d;
+    --orange-dim:rgba(255,122,61,0.35);
+    --cyan:#49d3ce;
+    --cyan-dim:rgba(73,211,206,0.32);
+    --white-path:rgba(230,235,242,0.5);
+    --panel-bg:rgba(255,255,255,0.028);
+    --sans: -apple-system, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --nav-h: 76px;
+  }
+  *{box-sizing:border-box;}
+  html{background:var(--bg); scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse 1200px 700px at 50% -10%, rgba(73,211,206,0.05), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+  }
+  ::selection{ background:var(--orange-dim); color:#fff; }
+  a{ color:inherit; }
+  h1,h2,h3,p{ margin:0; }
+  .mono{ font-family:var(--mono); letter-spacing:0.04em; }
+  .eyebrow{ font-family:var(--mono); font-size:11.5px; letter-spacing:0.14em; color:var(--muted); }
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 28px; height:var(--nav-h);
+    background:linear-gradient(to bottom, rgba(5,6,10,0.92), rgba(5,6,10,0));
+    backdrop-filter:blur(6px);
+    transition:height .35s ease, background .35s ease, border-color .35s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.nav.compact{ height:56px; background:rgba(6,7,11,0.86); border-color:var(--line); }
+  .nav-left{ display:flex; align-items:center; gap:12px; }
+  .nav-mark{ width:26px; height:26px; flex:none; }
+  .nav-word{ font-size:13.5px; font-weight:600; letter-spacing:0.14em; }
+  .nav-word b{ color:var(--muted); font-weight:500; }
+  nav.nav-links{ display:flex; gap:30px; }
+  nav.nav-links a{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:0.08em; text-decoration:none;
+    color:var(--muted); position:relative; padding-bottom:3px; transition:color .2s ease;
+  }
+  nav.nav-links a:hover{ color:var(--ink); }
+  nav.nav-links a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--orange);
+    transition:width .25s ease;
+  }
+  nav.nav-links a:hover::after{ width:100%; }
+  .nav-right a{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:0.1em; text-decoration:none;
+    border:1px solid var(--line-strong); padding:8px 16px; border-radius:2px; color:var(--ink);
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .nav-right a:hover{ border-color:var(--orange); background:rgba(255,122,61,0.06); }
+  @media (max-width:900px){ nav.nav-links{ display:none; } }
+
+  /* ---------- Visual engine layer ---------- */
+  #vizStage{
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+  }
+  #graphSvg{ position:absolute; inset:0; width:100%; height:100%; }
+  #planetCanvas{ position:absolute; inset:0; width:100%; height:100%; opacity:0; }
+  .viz-fade-top{
+    position:fixed; top:0; left:0; right:0; height:140px; z-index:2; pointer-events:none;
+    background:linear-gradient(to bottom, var(--bg), transparent);
+  }
+
+  main{ position:relative; z-index:5; }
+
+  .container{ max-width:1160px; margin:0 auto; padding:0 28px; }
+  section{ position:relative; padding:150px 0; }
+  section.tight{ padding:100px 0; }
+
+  /* ---------- Hero ---------- */
+  #hero{ min-height:100vh; display:flex; align-items:center; padding-top:var(--nav-h); }
+  .hero-grid{ display:grid; grid-template-columns:1fr; gap:28px; max-width:760px; }
+  .hero-mark{ display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+  .hero-mark svg{ width:34px; height:34px; }
+  .hero-wordmark{ font-size:15px; font-weight:600; letter-spacing:0.24em; }
+  .hero-wordmark span{ display:block; color:var(--muted); font-weight:400; font-size:12px; letter-spacing:0.3em; margin-top:2px; }
+  h1.headline{
+    font-size:clamp(38px, 6vw, 68px); line-height:1.04; font-weight:600; letter-spacing:-0.01em;
+  }
+  h1.headline em{ font-style:normal; color:var(--muted); }
+  .hero-copy{ max-width:520px; color:var(--muted); font-size:16.5px; line-height:1.65; }
+  .cta-row{ display:flex; gap:16px; margin-top:8px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.1em; text-decoration:none;
+    padding:14px 26px; border-radius:2px; display:inline-block; transition:all .2s ease;
+  }
+  .btn.primary{ background:var(--orange); color:#0a0503; border:1px solid var(--orange); }
+  .btn.primary:hover{ background:#ff8c57; }
+  .btn.ghost{ border:1px solid var(--line-strong); color:var(--ink); }
+  .btn.ghost:hover{ border-color:var(--cyan); color:var(--cyan); }
+  .scroll-hint{ position:absolute; bottom:36px; left:28px; font-family:var(--mono); font-size:10.5px; color:var(--dim); letter-spacing:0.15em; }
+
+  /* ---------- Section headers ---------- */
+  .sec-head{ max-width:640px; margin-bottom:56px; }
+  .sec-num{ font-family:var(--mono); font-size:11px; color:var(--dim); letter-spacing:0.16em; margin-bottom:14px; }
+  .sec-title{ font-size:clamp(26px,3.6vw,42px); font-weight:600; letter-spacing:-0.005em; margin-bottom:18px; }
+  .sec-body{ color:var(--muted); font-size:16px; line-height:1.7; max-width:540px; }
+  .sec-body .warn{ display:block; margin-top:14px; color:#a9afbc; font-size:14px; }
+
+  /* ---------- Side data panel ---------- */
+  .data-panel{
+    position:absolute; right:28px; top:60%; transform:translateY(-50%); width:230px;
+    background:var(--panel-bg); border:1px solid var(--line); border-radius:3px; padding:18px;
+    backdrop-filter:blur(4px);
+  }
+  .data-panel h4{ font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--ink); margin-bottom:14px; }
+  .data-row{ display:flex; justify-content:space-between; padding:8px 0; border-top:1px solid var(--line); font-size:12.5px; }
+  .data-row:first-of-type{ border-top:none; }
+  .data-row span:first-child{ color:var(--muted); }
+  .data-row span:last-child{ font-family:var(--mono); color:var(--cyan); }
+  .data-tag{ display:inline-block; margin-top:14px; font-family:var(--mono); font-size:9.5px; letter-spacing:0.1em; color:var(--dim); border:1px solid var(--line); padding:3px 8px; border-radius:2px; }
+  @media (max-width:980px){ .data-panel{ position:static; transform:none; width:100%; margin-top:28px; } }
+
+  /* ---------- Pipeline (mini flow used in section 04) ---------- */
+  .flow-mini{ margin-top:28px; display:flex; flex-direction:column; gap:0; max-width:280px; }
+  .flow-mini div{ font-family:var(--mono); font-size:11.5px; color:var(--muted); padding:9px 0; border-left:1px solid var(--line); padding-left:16px; position:relative; }
+  .flow-mini div::before{ content:""; position:absolute; left:-3px; top:14px; width:5px; height:5px; border-radius:50%; background:var(--cyan); }
+  .flow-mini div.hi{ color:var(--ink); }
+  .flow-mini div.hi::before{ background:var(--orange); }
+
+  /* ---------- HOW SENTINEL THINKS pipeline ---------- */
+  .pipeline{ display:flex; flex-direction:column; align-items:flex-start; gap:0; max-width:420px; margin-top:10px; }
+  .pipe-step{
+    display:flex; align-items:center; gap:16px; padding:16px 0; width:100%;
+    border-top:1px solid var(--line); opacity:0.35; transform:translateX(-6px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .pipe-step:first-child{ border-top:none; }
+  .pipe-step.on{ opacity:1; transform:translateX(0); }
+  .pipe-step .dot{ width:8px; height:8px; border-radius:50%; background:var(--dim); flex:none; transition:background .4s ease, box-shadow .4s ease; }
+  .pipe-step.on .dot{ background:var(--orange); box-shadow:0 0 10px var(--orange-dim); }
+  .pipe-step .lbl{ font-family:var(--mono); font-size:13px; letter-spacing:0.08em; color:var(--muted); }
+  .pipe-step.on .lbl{ color:var(--ink); }
+
+  /* ---------- Architecture layers ---------- */
+  .arch-layers{ display:grid; gap:14px; max-width:720px; margin-top:10px; }
+  .arch-layer{
+    border:1px solid var(--line); border-radius:3px; padding:20px 22px; background:var(--panel-bg);
+    transition:border-color .35s ease, background .35s ease;
+  }
+  .arch-layer.on{ border-color:var(--line-strong); background:rgba(255,255,255,0.045); }
+  .arch-layer h5{ font-family:var(--mono); font-size:12px; letter-spacing:0.1em; color:var(--ink); margin-bottom:8px; }
+  .arch-layer p{ font-size:13.5px; color:var(--muted); line-height:1.6; max-height:0; overflow:hidden; opacity:0; transition:max-height .4s ease, opacity .4s ease; }
+  .arch-layer.on p{ max-height:120px; opacity:1; margin-top:2px; }
+
+  /* ---------- Floating intel panels ---------- */
+  .float-panel{
+    position:fixed; z-index:3; width:172px; background:var(--panel-bg); border:1px solid var(--line);
+    border-radius:3px; padding:12px 14px; font-family:var(--mono); pointer-events:none;
+    opacity:0; transition:opacity .6s ease, transform .6s ease; transform:translateY(8px);
+  }
+  .float-panel.show{ opacity:1; transform:translateY(0); }
+  .float-panel h6{ font-size:9.5px; letter-spacing:0.1em; color:var(--dim); margin-bottom:8px; }
+  .float-panel .fp-val{ font-size:17px; color:var(--ink); }
+  .float-panel .fp-sub{ font-size:9.5px; color:var(--muted); margin-top:2px; }
+  @media (max-width:900px){ .float-panel{ display:none; } }
+
+  /* ---------- Node info popover ---------- */
+  #nodePopover{
+    position:fixed; z-index:60; width:220px; background:#0b0d13; border:1px solid var(--line-strong);
+    border-radius:4px; padding:16px 18px; font-family:var(--mono); font-size:12px; display:none;
+    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+  }
+  #nodePopover h6{ font-size:13px; letter-spacing:0.06em; margin-bottom:10px; color:var(--ink); }
+  #nodePopover .pr{ display:flex; justify-content:space-between; padding:5px 0; border-top:1px solid var(--line); }
+  #nodePopover .pr:first-of-type{ border-top:none; }
+  #nodePopover .pr span:first-child{ color:var(--muted); }
+  #nodePopover .pr span:last-child{ color:var(--cyan); }
+  #nodePopover .close{ position:absolute; top:10px; right:12px; cursor:pointer; color:var(--dim); pointer-events:auto; }
+
+  /* ---------- Final planetary section ---------- */
+  #planet-section{ min-height:180vh; display:flex; align-items:center; padding-bottom:0; }
+  .planet-copy{ text-align:center; max-width:600px; margin:0 auto; }
+  .planet-copy .sec-num{ text-align:center; }
+  .region-label{ position:absolute; font-family:var(--mono); font-size:10px; letter-spacing:0.12em; color:var(--muted); opacity:0; transition:opacity .8s ease; }
+  .region-label.on{ opacity:0.85; }
+
+  /* ---------- Footer ---------- */
+  footer{ position:relative; z-index:5; padding:120px 0 60px; border-top:1px solid var(--line); text-align:center; background:var(--bg); }
+  footer .foot-mark{ display:flex; justify-content:center; margin-bottom:22px; }
+  footer .foot-mark svg{ width:30px; height:30px; }
+  footer h3{ font-size:clamp(22px,3vw,32px); font-weight:600; letter-spacing:-0.01em; line-height:1.3; margin-bottom:16px; }
+  footer p.small{ font-family:var(--mono); font-size:11.5px; color:var(--dim); letter-spacing:0.05em; max-width:420px; margin:0 auto 30px; line-height:1.7; }
+  footer .foot-ctas{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:50px; }
+  footer .foot-links{ display:flex; gap:24px; justify-content:center; font-family:var(--mono); font-size:11px; color:var(--dim); }
+  footer .foot-links a{ text-decoration:none; color:var(--dim); }
+  footer .foot-links a:hover{ color:var(--ink); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition-duration:0.01ms !important; animation-duration:0.01ms !important; }
+  }
+  @media (max-width:640px){
+    section{ padding:100px 0; }
+    #hero{ min-height:92vh; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="visually-hidden" style="position:absolute;left:-9999px;">Skip to content</a>
+
+<header class="nav" id="siteNav">
+  <div class="nav-left">
+    <svg class="nav-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#oblivionMark"/></svg>
+    <span class="nav-word">SENTINEL <b>/ OBLIVION</b></span>
+  </div>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#platform">PLATFORM</a>
+    <a href="#intelligence">INTELLIGENCE</a>
+    <a href="#architecture">ARCHITECTURE</a>
+    <a href="#research">RESEARCH</a>
+    <a href="#about">ABOUT</a>
+  </nav>
+  <div class="nav-right">
+    <a href="https://shokribardiya.github.io/Oblivions0.github.io/" target="_blank" rel="noopener">OBLIVION</a>
+  </div>
+</header>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="oblivionMark">
+      <path d="M50 10 L80 32 L71 40 L50 25 L29 40 L20 32 Z" fill="currentColor" style="color:var(--ink)"/>
+      <circle cx="50" cy="62" r="22" fill="none" stroke="currentColor" style="color:var(--ink)" stroke-width="9"/>
+    </g>
+  </defs>
+</svg>
+
+<div id="vizStage" aria-hidden="true">
+  <svg id="graphSvg" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice"></svg>
+  <canvas id="planetCanvas"></canvas>
+</div>
+<div class="viz-fade-top"></div>
+
+<div id="nodePopover" role="dialog" aria-live="polite">
+  <span class="close" id="popClose">&times;</span>
+  <h6 id="popTitle">ENTITY</h6>
+  <div class="pr"><span>Status</span><span id="popStatus">Observed</span></div>
+  <div class="pr"><span>Relationships</span><span id="popRel">—</span></div>
+  <div class="pr"><span>Context</span><span id="popCtx">—</span></div>
+  <div class="pr"><span>Evidence</span><span id="popEv">—</span></div>
+  <div class="pr"><span>Confidence</span><span>Illustrative</span></div>
+</div>
+
+<div class="float-panel" id="fp1" style="top:120px; left:28px;">
+  <h6>SIGNAL ACTIVITY</h6>
+  <div class="fp-val mono" id="fp1val">0</div>
+  <div class="fp-sub">illustrative, per session</div>
+</div>
+<div class="float-panel" id="fp2" style="top:220px; right:28px; left:auto;">
+  <h6>RELATIONSHIP DENSITY</h6>
+  <div class="fp-val mono" id="fp2val">0%</div>
+  <div class="fp-sub">structural + informational</div>
+</div>
+<div class="float-panel" id="fp3" style="bottom:120px; left:28px; top:auto;">
+  <h6>EVENT FLOW</h6>
+  <div class="fp-val mono" id="fp3val">idle</div>
+  <div class="fp-sub">observation pipeline</div>
+</div>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-mark">
+          <svg viewBox="0 0 100 100" aria-hidden="true"><use href="#oblivionMark"/></svg>
+          <div class="hero-wordmark">OBLIVION<br>SENTINEL<span>GLOBAL SECURITY INTELLIGENCE</span></div>
+        </div>
+        <h1 class="headline">See the signal.<br><em>Understand the threat.</em></h1>
+        <p class="hero-copy">Oblivion Sentinel is a security intelligence platform designed to correlate complex signals, identify meaningful relationships, investigate potential threats, and turn fragmented security information into a structured operational picture.</p>
+        <div class="cta-row">
+          <a href="#platform" class="btn primary">EXPLORE SENTINEL</a>
+          <a href="#architecture" class="btn ghost">VIEW ARCHITECTURE</a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint mono">SCROLL — SIGNAL BUILDS BELOW</div>
+  </section>
+
+  <!-- 01 SIGNAL -->
+  <section id="platform" data-stage="signal">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-num">01 / SIGNAL</div>
+        <h2 class="sec-title">SIGNAL</h2>
+        <p class="sec-body">Modern security environments produce enormous volumes of fragmented signals. Sentinel begins by observing those signals and placing them into a structured analytical context.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 DETECTION -->
+  <section data-stage="detection">
+    <div class="container" style="position:relative;">
+      <div class="sec-head">
+        <div class="sec-num">02 / DETECTION</div>
+        <h2 class="sec-title">DETECTION</h2>
+        <p class="sec-body">Sentinel separates meaningful indicators from background noise and surfaces activity that warrants investigation.</p>
+      </div>
+      <div class="data-panel">
+        <h4>DETECTION</h4>
+        <div class="data-row"><span>Signals observed</span><span id="dSig">128</span></div>
+        <div class="data-row"><span>Patterns found</span><span id="dPat">14</span></div>
+        <div class="data-row"><span>Anomalies</span><span id="dAno">3</span></div>
+        <div class="data-row"><span>Risk indicators</span><span id="dRisk">2</span></div>
+        <span class="data-tag">ILLUSTRATIVE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 CORRELATION -->
+  <section data-stage="correlation">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-num">03 / CORRELATION</div>
+        <h2 class="sec-title">Connect the dots.</h2>
+        <p class="sec-body">A single event rarely explains a security incident. Sentinel connects related signals across time, systems, identities, locations, and infrastructure to build a broader picture.</p>
+        <div class="flow-mini">
+          <div class="hi">ORANGE — high-priority relationship</div>
+          <div>CYAN — informational relationship</div>
+          <div>WHITE — structural relationship</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ANALYSIS -->
+  <section id="intelligence" data-stage="analysis">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-num">04 / ANALYSIS</div>
+        <h2 class="sec-title">Understand the pattern.</h2>
+        <p class="sec-body">Structured relationships allow investigators to move beyond isolated events and examine the patterns connecting them.</p>
+        <div class="pipeline" id="analysisFlow">
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">ENTITY A</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">EVENT</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">LOCATION</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">INFRASTRUCTURE</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">RELATED SIGNAL</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 ATTRIBUTION -->
+  <section data-stage="attribution">
+    <div class="container" style="position:relative;">
+      <div class="sec-head">
+        <div class="sec-num">05 / ATTRIBUTION</div>
+        <h2 class="sec-title">Trace the origin.</h2>
+        <p class="sec-body">Sentinel is designed to help investigators examine relationships and available evidence surrounding suspicious activity.
+          <span class="warn">Sentinel does not claim to reveal a real-world attacker identity from an IP address alone — outputs describe infrastructure relationships and contextual indicators, not confirmed identity.</span>
+        </p>
+      </div>
+      <div class="data-panel">
+        <h4>SOURCE ANALYSIS</h4>
+        <div class="data-row"><span>Origin indicators</span><span>7</span></div>
+        <div class="data-row"><span>Infra. relationships</span><span>11</span></div>
+        <div class="data-row"><span>Location context</span><span>Regional</span></div>
+        <div class="data-row"><span>Confidence</span><span>Illustrative</span></div>
+        <span class="data-tag">ILLUSTRATIVE DATA</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 INTELLIGENCE -->
+  <section data-stage="intelligence">
+    <div class="container" style="position:relative;">
+      <div class="sec-head">
+        <div class="sec-num">06 / INTELLIGENCE</div>
+        <h2 class="sec-title">From events to intelligence.</h2>
+        <p class="sec-body">Sentinel transforms fragmented observations into a structured analytical picture that investigators can explore, compare, and understand.</p>
+      </div>
+      <div class="data-panel">
+        <h4>THREAT OBJECT</h4>
+        <div class="data-row"><span>Type</span><span>Composite</span></div>
+        <div class="data-row"><span>Status</span><span>Observed</span></div>
+        <div class="data-row"><span>Risk</span><span>Elevated</span></div>
+        <div class="data-row"><span>Relationships</span><span>9</span></div>
+        <div class="data-row"><span>Evidence</span><span>5</span></div>
+        <span class="data-tag">ILLUSTRATIVE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 RESPONSE -->
+  <section data-stage="response">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-num">07 / RESPONSE</div>
+        <h2 class="sec-title">Act with context.</h2>
+        <p class="sec-body">Detection is only the beginning. Sentinel is designed to support defensive investigation and response workflows, helping operators move from observation to informed action.
+          <span class="warn">Sentinel supports defensive, authorized response actions only — it is not designed for offensive capability.</span>
+        </p>
+        <div class="flow-mini">
+          <div class="hi">ISOLATE</div><div>INVESTIGATE</div><div>VERIFY</div><div>CONTAIN</div><div>MONITOR</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW SENTINEL THINKS -->
+  <section id="research" class="tight">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-num">PIPELINE</div>
+        <h2 class="sec-title">How Sentinel thinks.</h2>
+        <p class="sec-body">A conceptual pipeline for turning raw signal into structured intelligence.</p>
+        <div class="pipeline" id="thinksFlow">
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">SIGNALS</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">INGESTION</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">NORMALIZATION</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">CORRELATION</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">RELATIONSHIPS</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">ANALYSIS</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">INTELLIGENCE</span></div>
+          <div class="pipe-step"><span class="dot"></span><span class="lbl">RESPONSE</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section id="architecture" class="tight">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-num">SYSTEM</div>
+        <h2 class="sec-title">Sentinel architecture</h2>
+        <p class="sec-body">Four conceptual layers, from raw observation to informed response.</p>
+      </div>
+      <div class="arch-layers" id="archLayers">
+        <div class="arch-layer" data-layer="0"><h5>OBSERVATION</h5><p>Ingests fragmented signal from networks, endpoints, identities, and events, and normalizes it into a common structure.</p></div>
+        <div class="arch-layer" data-layer="1"><h5>ANALYSIS</h5><p>Surfaces correlations and relationships between signals across time, systems, and infrastructure.</p></div>
+        <div class="arch-layer" data-layer="2"><h5>INTELLIGENCE</h5><p>Organizes related signals into object-centric threat context that investigators can explore and compare.</p></div>
+        <div class="arch-layer" data-layer="3"><h5>RESPONSE</h5><p>Supports authorized, defensive investigation and response workflows built on that context.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANET -->
+  <section id="planet-section" data-stage="planet">
+    <div class="container">
+      <div class="planet-copy">
+        <div class="sec-num">08 / GLOBAL VIEW</div>
+        <h2 class="sec-title">One structured picture, at scale.</h2>
+        <p class="sec-body" style="margin:0 auto;">Individual signals, correlated relationships, and investigative context converge into a single operational view.</p>
+      </div>
+    </div>
+    <div class="region-label" id="rlNA" style="top:38%; left:20%;">NORTH AMERICA</div>
+    <div class="region-label" id="rlEU" style="top:30%; left:48%;">EUROPE</div>
+    <div class="region-label" id="rlLA" style="top:62%; left:28%;">LATIN AMERICA</div>
+    <div class="region-label" id="rlME" style="top:44%; left:56%;">MIDDLE EAST</div>
+    <div class="region-label" id="rlAF" style="top:58%; left:50%;">AFRICA</div>
+    <div class="region-label" id="rlAS" style="top:36%; left:70%;">ASIA</div>
+    <div class="region-label" id="rlPA" style="top:56%; left:80%;">PACIFIC</div>
+  </section>
+
+</main>
+
+<footer id="about">
+  <div class="container">
+    <div class="foot-mark"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#oblivionMark"/></svg></div>
+    <h3>See more. Understand more.<br>Respond with context.</h3>
+    <p class="small">Defensive security intelligence, in active development. Built for authorized environments.</p>
+    <div class="foot-ctas">
+      <a href="https://shokribardiya.github.io/Oblivions0.github.io/" target="_blank" rel="noopener" class="btn primary">EXPLORE OBLIVION</a>
+      <a href="#hero" class="btn ghost">VIEW SENTINEL</a>
+      <a href="https://shokribardiya.github.io/Oblivions0.github.io/" target="_blank" rel="noopener" class="btn ghost">GITHUB</a>
+    </div>
+    <div class="foot-links">
+      <span>&copy; OBLIVION</span>
+      <a href="#platform">PLATFORM</a>
+      <a href="#architecture">ARCHITECTURE</a>
+      <a href="#research">RESEARCH</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ============ DATA MODEL ============ */
+const sentinelData = {
+  signals:[], detections:[], entities:[], relationships:[], locations:[], events:[], threats:[], responseActions:[]
+};
+
+/* deterministic pseudo-random */
+function mulberry32(seed){
+  return function(){
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const rnd = mulberry32(88);
+
+const LABELS = ["NETWORK","ENDPOINT","IDENTITY","EVENT","LOCATION","ENTITY","INFRASTRUCTURE","DOMAIN","IP","DEVICE","TIMELINE","EVIDENCE"];
+const TOTAL_NODES = 46;
+const nodes = [];
+const edges = [];
+
+for(let i=0;i<TOTAL_NODES;i++){
+  const angle = rnd()*Math.PI*2;
+  const radius = 90 + rnd()*400;
+  nodes.push({
+    id:'n'+i,
+    x: 500 + Math.cos(angle)*radius + (rnd()-0.5)*80,
+    y: 460 + Math.sin(angle)*radius*0.62 + (rnd()-0.5)*80,
+    label: LABELS[i % LABELS.length],
+    kind: i % 7 === 0 ? 'priority' : (i % 3 === 0 ? 'info' : 'structural'),
+    order: i,
+    rel: 2 + Math.floor(rnd()*14),
+    evidence: Math.floor(rnd()*8),
+  });
+}
+for(let i=0;i<TOTAL_NODES*1.6;i++){
+  const a = Math.floor(rnd()*TOTAL_NODES);
+  let b = Math.floor(rnd()*TOTAL_NODES);
+  if(b===a) b = (b+1) % TOTAL_NODES;
+  edges.push({ a, b, kind: rnd()<0.28?'priority':(rnd()<0.55?'info':'structural'), order: Math.max(a,b) });
+}
+sentinelData.entities = nodes;
+sentinelData.relationships = edges;
+
+/* ============ SVG GRAPH ENGINE ============ */
+const svg = document.getElementById('graphSvg');
+const NS = 'http://www.w3.org/2000/svg';
+const nodeEls = new Map();
+const edgeEls = new Map();
+let hoveredId = null;
+
+function curvePath(p1,p2){
+  const mx = (p1.x+p2.x)/2, my = (p1.y+p2.y)/2;
+  const dx = p2.x-p1.x, dy = p2.y-p1.y;
+  const nx = -dy, ny = dx;
+  const len = Math.hypot(nx,ny) || 1;
+  const bend = 22;
+  const cx = mx + (nx/len)*bend, cy = my + (ny/len)*bend;
+  return `M ${p1.x} ${p1.y} Q ${cx} ${cy} ${p2.x} ${p2.y}`;
+}
+function edgeColor(kind){
+  return kind==='priority' ? 'var(--orange)' : (kind==='info' ? 'var(--cyan)' : 'var(--white-path)');
+}
+
+edges.forEach((e,idx)=>{
+  const p = document.createElementNS(NS,'path');
+  p.setAttribute('fill','none');
+  p.setAttribute('stroke', edgeColor(e.kind));
+  p.setAttribute('stroke-width', e.kind==='priority' ? '1.1':'0.6');
+  p.setAttribute('opacity','0');
+  p.style.transition = reduced ? 'none' : 'opacity .7s ease';
+  p.setAttribute('d', curvePath(nodes[e.a], nodes[e.b]));
+  svg.appendChild(p);
+  edgeEls.set(idx, p);
+});
+nodes.forEach((n,idx)=>{
+  const g = document.createElementNS(NS,'g');
+  g.setAttribute('opacity','0');
+  g.style.transition = reduced ? 'none' : 'opacity .6s ease';
+  g.style.cursor = 'pointer';
+  g.setAttribute('pointer-events','auto');
+
+  const halo = document.createElementNS(NS,'circle');
+  halo.setAttribute('r','9'); halo.setAttribute('cx',n.x); halo.setAttribute('cy',n.y);
+  halo.setAttribute('fill', n.kind==='priority'?'var(--orange-dim)':(n.kind==='info'?'var(--cyan-dim)':'transparent'));
+  halo.setAttribute('class','halo');
+
+  const dot = document.createElementNS(NS,'circle');
+  dot.setAttribute('r','3.4'); dot.setAttribute('cx',n.x); dot.setAttribute('cy',n.y);
+  dot.setAttribute('fill', n.kind==='priority'?'var(--orange)':(n.kind==='info'?'var(--cyan)':'#dfe4ec'));
+
+  const label = document.createElementNS(NS,'text');
+  label.setAttribute('x', n.x+8); label.setAttribute('y', n.y-8);
+  label.setAttribute('font-family','var(--mono)'); label.setAttribute('font-size','7.2');
+  label.setAttribute('fill','rgba(220,226,236,0.55)'); label.setAttribute('letter-spacing','0.03em');
+  label.textContent = n.label;
+
+  g.appendChild(halo); g.appendChild(dot); g.appendChild(label);
+  svg.appendChild(g);
+  nodeEls.set(idx, g);
+
+  g.addEventListener('mouseenter', ()=> setHover(idx));
+  g.addEventListener('mouseleave', ()=> setHover(null));
+  g.addEventListener('click', (ev)=> openPopover(n, ev));
+});
+
+function setHover(idx){
+  hoveredId = idx;
+  const neighborSet = new Set();
+  if(idx!==null){
+    edges.forEach(e=>{ if(e.a===idx) neighborSet.add(e.b); if(e.b===idx) neighborSet.add(e.a); });
+  }
+  nodeEls.forEach((g,i)=>{
+    if(idx===null){ g.style.filter=''; g.style.opacity = g.dataset.active==='1' ? '1':'0'; return; }
+    const active = (i===idx || neighborSet.has(i));
+    g.style.filter = active ? 'none' : 'brightness(0.35)';
+  });
+  edgeEls.forEach((p,i)=>{
+    if(idx===null){ p.style.filter=''; return; }
+    const e = edges[i];
+    const active = e.a===idx || e.b===idx;
+    p.style.filter = active ? 'none':'brightness(0.3)';
+    if(active) p.setAttribute('stroke-width', e.kind==='priority'?'1.8':'1.1');
+    else p.setAttribute('stroke-width', e.kind==='priority'?'1.1':'0.6');
+  });
+}
+
+const popover = document.getElementById('nodePopover');
+document.getElementById('popClose').addEventListener('click', ()=> popover.style.display='none');
+function openPopover(n, ev){
+  document.getElementById('popTitle').textContent = n.label;
+  document.getElementById('popRel').textContent = n.rel;
+  document.getElementById('popCtx').textContent = n.kind==='priority' ? 'Priority relationship' : (n.kind==='info' ? 'Informational context' : 'Structural link');
+  document.getElementById('popEv').textContent = n.evidence;
+  const x = Math.min(window.innerWidth-240, ev.clientX + 16);
+  const y = Math.min(window.innerHeight-160, ev.clientY + 16);
+  popover.style.left = x+'px'; popover.style.top = y+'px';
+  popover.style.display = 'block';
+}
+
+/* ============ SCROLL STATE ============ */
+const STAGES = [
+  {key:'hero', from:0.00, to:0.12},
+  {key:'signal', from:0.12, to:0.25},
+  {key:'detection', from:0.25, to:0.38},
+  {key:'correlation', from:0.38, to:0.50},
+  {key:'analysis', from:0.50, to:0.62},
+  {key:'attribution', from:0.62, to:0.73},
+  {key:'intelligence', from:0.73, to:0.84},
+  {key:'response', from:0.84, to:0.92},
+  {key:'planet', from:0.92, to:1.00},
+];
+function currentStageIndex(p){
+  for(let i=STAGES.length-1;i>=0;i--){ if(p>=STAGES[i].from) return i; }
+  return 0;
+}
+function getProgress(){
+  const doc = document.documentElement;
+  const max = doc.scrollHeight - window.innerHeight;
+  return max<=0 ? 0 : Math.min(1, Math.max(0, window.scrollY / max));
+}
+
+const nav = document.getElementById('siteNav');
+const planetCanvas = document.getElementById('planetCanvas');
+const ctx = planetCanvas.getContext('2d');
+function resizeCanvas(){
+  planetCanvas.width = window.innerWidth * Math.min(devicePixelRatio||1, 2);
+  planetCanvas.height = window.innerHeight * Math.min(devicePixelRatio||1, 2);
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+const isMobile = window.innerWidth < 720;
+const isTablet = window.innerWidth >= 720 && window.innerWidth < 1080;
+const nodeCap = isMobile ? 20 : (isTablet ? 32 : TOTAL_NODES);
+const edgeCap = isMobile ? Math.floor(edges.length*0.4) : (isTablet ? Math.floor(edges.length*0.7) : edges.length);
+
+let planetRotation = 0;
+let lastT = 0;
+
+function drawPlanet(alpha, t){
+  const w = planetCanvas.width, h = planetCanvas.height;
+  ctx.clearRect(0,0,w,h);
+  if(alpha<=0.01) return;
+  const cx = w*0.5, cy = h*0.56, r = Math.min(w,h)*0.30;
+
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  // sphere body
+  const grad = ctx.createRadialGradient(cx-r*0.35, cy-r*0.35, r*0.15, cx, cy, r*1.05);
+  grad.addColorStop(0,'#161c26');
+  grad.addColorStop(0.55,'#0c1017');
+  grad.addColorStop(1,'#05070a');
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.fillStyle = grad; ctx.fill();
+
+  // atmosphere edge
+  ctx.beginPath(); ctx.arc(cx,cy,r+2,0,Math.PI*2);
+  ctx.strokeStyle = 'rgba(73,211,206,0.25)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+  // meridians
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 0.6;
+  for(let i=-3;i<=3;i++){
+    ctx.beginPath();
+    ctx.ellipse(cx,cy, Math.abs(r*Math.cos(i*0.45)) , r, 0,0,Math.PI*2);
+    ctx.stroke();
+  }
+  for(let i=1;i<4;i++){
+    ctx.beginPath();
+    ctx.ellipse(cx, cy - r + (i*r*0.5), r*Math.sin(i*0.78), r*0.18, 0, 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  // procedural landmasses (soft blobs)
+  ctx.fillStyle = 'rgba(180,190,205,0.10)';
+  const blobs = [[-0.35,-0.1,0.5],[0.1,-0.25,0.35],[0.3,0.15,0.42],[-0.1,0.3,0.3],[0.42,-0.05,0.22]];
+  blobs.forEach(([bx,by,br])=>{
+    ctx.beginPath();
+    ctx.ellipse(cx+bx*r, cy+by*r, br*r*0.55, br*r*0.38, bx, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  // orbit arcs + trajectories
+  const rot = t*0.00006;
+  for(let i=0;i<3;i++){
+    ctx.beginPath();
+    ctx.strokeStyle = i%2===0 ? 'rgba(255,122,61,0.35)' : 'rgba(73,211,206,0.32)';
+    ctx.lineWidth = 0.8;
+    ctx.ellipse(cx,cy, r*1.25+i*22, r*0.42+i*10, rot+i, 0.15, Math.PI-0.15);
+    ctx.stroke();
+  }
+
+  // illuminated points
+  const pts = [[-0.3,-0.15],[0.15,-0.3],[0.32,0.1],[-0.05,0.28],[0.4,-0.02],[-0.42,0.12]];
+  pts.forEach(([px,py],i)=>{
+    const gx = cx+px*r, gy = cy+py*r;
+    ctx.beginPath(); ctx.arc(gx,gy,1.6,0,Math.PI*2);
+    ctx.fillStyle = i%2===0 ? '#ff7a3d' : '#49d3ce';
+    ctx.fill();
+  });
+
+  ctx.restore();
+}
+
+/* pipeline + arch elements */
+const thinksSteps = document.querySelectorAll('#thinksFlow .pipe-step');
+const analysisSteps = document.querySelectorAll('#analysisFlow .pipe-step');
+const archLayers = document.querySelectorAll('.arch-layer');
+const regionLabels = document.querySelectorAll('.region-label');
+
+function updateFloatPanels(stageKey, p){
+  document.getElementById('fp1').classList.toggle('show', ['signal','detection','correlation'].includes(stageKey));
+  document.getElementById('fp2').classList.toggle('show', ['correlation','analysis','attribution'].includes(stageKey));
+  document.getElementById('fp3').classList.toggle('show', ['intelligence','response'].includes(stageKey));
+  document.getElementById('fp1val').textContent = Math.round(40 + p*400);
+  document.getElementById('fp2val').textContent = Math.round(p*100) + '%';
+  document.getElementById('fp3val').textContent = stageKey==='response' ? 'active' : 'observing';
+}
+
+function render(){
+  const p = getProgress();
+  const stageIdx = currentStageIndex(p);
+  const stage = STAGES[stageIdx];
+  const stageKey = stage.key;
+
+  nav.classList.toggle('compact', window.scrollY > 40);
+
+  // section-based reveal counts, cumulative through hero..response (0 -> 1 across p 0.12-0.92)
+  const revealP = Math.max(0, Math.min(1, (p-0.10)/0.82));
+  const activeNodeCount = Math.min(nodeCap, Math.round(revealP*nodeCap));
+  const activeEdgeCount = Math.min(edgeCap, Math.round(revealP*edgeCap));
+
+  nodeEls.forEach((g,i)=>{
+    const active = i < activeNodeCount;
+    g.dataset.active = active ? '1':'0';
+    if(hoveredId===null) g.style.opacity = active ? '1':'0';
+  });
+  edgeEls.forEach((el,i)=>{
+    el.setAttribute('opacity', i < activeEdgeCount ? (edges[i].kind==='priority'?'0.85':'0.5') : '0');
+  });
+
+  // planet crossfade near end
+  const planetT = Math.max(0, Math.min(1, (p-0.86)/0.14));
+  svg.style.opacity = String(1 - planetT*0.85);
+  planetCanvas.style.opacity = String(planetT);
+  drawPlanet(planetT, performance.now());
+  regionLabels.forEach((el,i)=> el.classList.toggle('on', planetT > (0.15 + i*0.1)));
+
+  // detection numbers pulse
+  if(stageKey==='detection'){
+    const t = (p-0.25)/0.13;
+    document.getElementById('dSig').textContent = Math.round(90 + t*90);
+    document.getElementById('dPat').textContent = Math.round(6 + t*14);
+    document.getElementById('dAno').textContent = Math.round(1 + t*4);
+    document.getElementById('dRisk').textContent = Math.round(1 + t*3);
+  }
+
+  // analysis mini pipeline
+  if(stageKey==='analysis'){
+    const t = (p-0.50)/0.12;
+    analysisSteps.forEach((el,i)=> el.classList.toggle('hi', t*analysisSteps.length > i));
+  }
+
+  // how sentinel thinks pipeline — tied to its own scroll position via IO fallback handled below
+
+  updateFloatPanels(stageKey, revealP);
+}
+
+/* pipeline + arch layer activation via IntersectionObserver (content sections, not the fixed viz) */
+const thinksSection = document.getElementById('research');
+const archSection = document.getElementById('architecture');
+if('IntersectionObserver' in window){
+  const io1 = new IntersectionObserver((es)=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        const ratio = e.intersectionRatio;
+        const n = Math.round(ratio*thinksSteps.length);
+        thinksSteps.forEach((el,i)=> el.classList.toggle('on', i < Math.max(1,n)));
+      }
+    });
+  }, {threshold:[0,0.2,0.4,0.6,0.8,1]});
+  io1.observe(thinksSection);
+
+  const io2 = new IntersectionObserver((es)=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        const n = Math.round(e.intersectionRatio*archLayers.length);
+        archLayers.forEach((el,i)=> el.classList.toggle('on', i < Math.max(1,n)));
+      }
+    });
+  }, {threshold:[0,0.25,0.5,0.75,1]});
+  io2.observe(archSection);
+}
+
+/* parallax (desktop, motion allowed) */
+if(!reduced && !isMobile){
+  window.addEventListener('mousemove', (e)=>{
+    const dx = (e.clientX/window.innerWidth - 0.5) * 6;
+    const dy = (e.clientY/window.innerHeight - 0.5) * 6;
+    svg.style.transform = `translate(${dx}px, ${dy}px)`;
+  });
+}
+
+/* rAF loop bound to scroll, throttled via scroll flag */
+let ticking = false;
+function onScroll(){
+  if(!ticking){
+    requestAnimationFrame(()=>{ render(); ticking=false; });
+    ticking = true;
+  }
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('resize', onScroll);
+render();
+
+/* idle animation for planet arcs even without scroll (paused if reduced motion) */
+if(!reduced){
+  function loop(t){
+    if(parseFloat(planetCanvas.style.opacity||'0') > 0.02){ drawPlanet(parseFloat(planetCanvas.style.opacity), t); }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+}
+
+/* smooth nav anchors */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', (e)=>{
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if(el){ e.preventDefault(); el.scrollIntoView({behavior: reduced ? 'auto':'smooth'}); }
+  });
+});
+
+})();
+</script>
+</body>
+</html>
