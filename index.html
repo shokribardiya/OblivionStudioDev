@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta name="google-site-verification" content="Ulz4fkTjvfUssE0AQIz_tIOsz_neuTYXr_VGsIrWfvg" />
 <meta charset="utf-8">
+<!-- SECURITY-LAYER:BEGIN -->
+<!-- Client-side hardening only. Not a substitute for server/Cloudflare protections
+     (security headers, WAF, rate limiting, auth). Safe to edit the page freely. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' data: blob:; connect-src https://api.github.com; object-src 'none'; frame-src 'none'; worker-src 'none'; manifest-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- SECURITY-LAYER:END -->
+
 <meta name="google-site-verification" content="Ulz4fkTjvfUssE0AQIz_tIOsz_neuTYXr_VGsIrWfvg" />
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>OBLIVION — Software, intelligence, systems</title>
-<meta name="google-site-verification" content="Ulz4fkTjvfUssE0AQIz_tIOsz_neuTYXr_VGsIrWfvg" />
 <meta name="description" content="OBLIVION is a software engineering organization working on AI systems, agent systems and games. Home of Angra.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='56' r='30' fill='none' stroke='black' stroke-width='11'/%3E%3Ccircle cx='50' cy='56' r='0' /%3E%3Cpath d='M22 24 50 11 78 24' fill='none' stroke='%23CB7C5E' stroke-width='9'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -396,14 +400,15 @@ v.addEventListener('play',()=>p.classList.add('off'));
 v.addEventListener('ended',()=>p.classList.remove('off'));
 
 /* publications: add new entries here */
+const X=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));const U=u=>/^https:\/\//i.test(String(u))?X(u):'#';
 const ARTICLES=[{title:'The Recursive Threshold',author:'Bardiya Shokri',date:'',category:'Research',excerpt:'Recursive self-improvement, autonomous agents, AI infrastructure, cyber risk and human control.',url:'https://medium.com/@shokribardiya0/oblivion-the-recursive-threshold-e62babf89a38'}];
-$('#articles').innerHTML=ARTICLES.map(a=>`<a class="row" href="${a.url}" target="_blank" rel="noopener"><div class="mono muted">${a.category}${a.date?' · '+a.date:''}</div><div><h3>${a.title}</h3><p>${a.excerpt}</p></div><span class="m">${a.author}</span></a>`).join('');
+$('#articles').innerHTML=ARTICLES.map(a=>`<a class="row" href="${U(a.url)}" target="_blank" rel="noopener"><div class="mono muted">${X(a.category)}${a.date?' · '+X(a.date):''}</div><div><h3>${X(a.title)}</h3><p>${X(a.excerpt)}</p></div><span class="m">${X(a.author)}</span></a>`).join('');
 
 /* GitHub: fetched in the visitor's browser; falls back to a plain link */
 const esc=t=>String(t||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 fetch('https://api.github.com/users/shokribardiya/repos?sort=pushed&per_page=8').then(r=>{if(!r.ok)throw 0;return r.json()}).then(rs=>{
  rs=rs.filter(r=>!r.fork);if(!rs.length)return;
- $('#repos').innerHTML=rs.map(r=>`<a class="row" href="${esc(r.html_url)}" target="_blank" rel="noopener"><div class="mono muted">${esc(r.language||'—')}</div><div><h3>${esc(r.name)}</h3><p>${esc(r.description||'No description.')}</p></div><span class="m">${new Date(r.pushed_at).toLocaleDateString('en',{year:'numeric',month:'short'})}</span></a>`).join('');
+ $('#repos').innerHTML=rs.map(r=>`<a class="row" href="${/^https:\/\//i.test(r.html_url)?esc(r.html_url):'#'}" target="_blank" rel="noopener"><div class="mono muted">${esc(r.language||'—')}</div><div><h3>${esc(r.name)}</h3><p>${esc(r.description||'No description.')}</p></div><span class="m">${new Date(r.pushed_at).toLocaleDateString('en',{year:'numeric',month:'short'})}</span></a>`).join('');
  const g=$('#gh-state');g.textContent='LIVE · GITHUB API';
 }).catch(()=>{});
 })();
