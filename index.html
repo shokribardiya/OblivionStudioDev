@@ -1208,3 +1208,117 @@ fetch('https://api.github.com/users/shokribardiya/repos?sort=pushed&per_page=8')
   } catch (e) { /* fail silently */ }
 })();
 </script>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Oblivion Intelligence Chat</title>
+<style>
+:root{--ink:#070b10;--panel:#0b1119;--blue:#1769b4;--blue2:#5ba9f2;--paper:#ead39a;--gold:#d8a84e;--text:#edf3fa;--muted:#94a5b8;--line:#26394b;--radius:20px}
+*{box-sizing:border-box}
+.ob-chat-launch{position:fixed;right:22px;bottom:22px;z-index:2147483000;border:1px solid #8ac8ff66;background:linear-gradient(145deg,#1c6db7,#0b2947);color:white;border-radius:999px;padding:13px 18px;display:flex;gap:10px;align-items:center;font:600 14px/1 system-ui,sans-serif;box-shadow:0 10px 35px #0008;cursor:pointer}
+.ob-chat-launch .orb{width:11px;height:11px;border-radius:50%;background:#f0cf83;box-shadow:0 0 15px #f0cf83;animation:obPulse 2.2s infinite}
+.ob-chat{position:fixed;right:22px;bottom:84px;width:min(410px,calc(100vw - 28px));height:min(610px,calc(100dvh - 115px));z-index:2147483000;background:var(--panel);color:var(--text);border:1px solid #4a6680;border-radius:var(--radius);box-shadow:0 22px 80px #000b;overflow:hidden;display:none;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+.ob-chat.open{display:flex;flex-direction:column;animation:obIn .22s ease-out}
+.ob-head{position:relative;padding:17px 17px 14px;background:linear-gradient(112deg,#102d4d 0%,#10253b 46%,#1a2b34 100%);border-bottom:1px solid #516d7d;overflow:hidden}
+.ob-head:before{content:"";position:absolute;inset:-60%;opacity:.22;background:repeating-radial-gradient(ellipse at 20% 50%,transparent 0 20px,#d7e8f8 21px 22px,transparent 23px 38px);animation:obDrift 28s linear infinite;pointer-events:none}
+.ob-head:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0b1a2c55,#ead39a18);pointer-events:none}
+.ob-head-row{position:relative;display:flex;align-items:center;gap:11px;z-index:1}
+.ob-mark{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#ead39a,#1b6ab0 52%,#0a1727);border:1px solid #ffffff50;color:#08111b;font-size:20px;font-weight:900;box-shadow:inset 0 0 15px #fff5}
+.ob-title{font-weight:700;letter-spacing:.2px;font-size:15px}.ob-sub{font-size:11px;color:#c4d6e6;letter-spacing:.7px;text-transform:uppercase}
+.ob-close{margin-left:auto;border:0;background:#ffffff12;color:#fff;border-radius:10px;width:32px;height:32px;font-size:20px;cursor:pointer}
+.ob-intro{position:relative;z-index:1;margin:13px 0 0;color:#dce8f2;font-size:12px}
+.ob-log{flex:1;overflow:auto;padding:17px 14px;display:flex;flex-direction:column;gap:12px;background:radial-gradient(ellipse at 100% 0%,#164a7522,transparent 45%),var(--panel)}
+.ob-msg{max-width:89%;padding:11px 13px;border-radius:15px;white-space:pre-wrap;overflow-wrap:anywhere}
+.ob-msg.bot{align-self:flex-start;background:#121f2c;border:1px solid #2c4356;border-top-left-radius:5px}
+.ob-msg.user{align-self:flex-end;background:linear-gradient(135deg,#15528b,#12385d);border:1px solid #377ab0;border-top-right-radius:5px}
+.ob-msg small{display:block;margin-top:5px;color:#a9bbcc;font-size:10px}
+.ob-typing{color:#a9c6df;font-size:12px;padding:0 17px 9px;display:none}
+.ob-typing.show{display:block}
+.ob-chips{display:flex;gap:7px;padding:0 13px 10px;overflow:auto}
+.ob-chip{white-space:nowrap;border:1px solid #38556c;background:#0e1b28;color:#c9dceb;border-radius:999px;padding:7px 10px;font-size:11px;cursor:pointer}
+.ob-compose{padding:12px;border-top:1px solid var(--line);background:#091019}
+.ob-form{display:flex;align-items:flex-end;gap:8px}
+.ob-input{flex:1;min-width:0;max-height:110px;resize:vertical;background:#101c28;border:1px solid #344c61;color:var(--text);border-radius:14px;padding:11px 12px;font:14px/1.4 inherit;outline:none}
+.ob-input:focus{border-color:#5ba9f2;box-shadow:0 0 0 2px #5ba9f222}
+.ob-send{width:43px;height:43px;border:0;border-radius:13px;background:linear-gradient(135deg,#e9d29a,#d6a84f);color:#111923;font-size:18px;font-weight:800;cursor:pointer}
+.ob-send:disabled{opacity:.45;cursor:wait}
+.ob-foot{font-size:10px;color:#71869a;text-align:center;padding:7px 0 0}
+@keyframes obPulse{50%{box-shadow:0 0 3px #f0cf83;opacity:.7}}@keyframes obDrift{to{transform:rotate(360deg)}}@keyframes obIn{from{opacity:0;transform:translateY(9px) scale(.99)}to{opacity:1;transform:none}}
+@media(max-width:520px){.ob-chat-launch{right:14px;bottom:14px}.ob-chat{right:8px;bottom:72px;width:calc(100vw - 16px);height:min(650px,calc(100dvh - 90px))}}
+@media(prefers-reduced-motion:reduce){.ob-chat,.ob-head:before,.ob-chat-launch .orb{animation:none}}
+</style>
+</head>
+<body>
+<!-- Oblivion Chat widget. Connected directly to Gemini (private use only). -->
+<button class="ob-chat-launch" id="obLaunch" aria-controls="obChat" aria-expanded="false"><span class="orb"></span> Ask Oblivion AI</button>
+<section class="ob-chat" id="obChat" role="dialog" aria-label="Oblivion AI assistant" aria-modal="false">
+  <header class="ob-head">
+    <div class="ob-head-row"><div class="ob-mark" aria-hidden="true">◉</div><div><div class="ob-title">Oblivion Intelligence</div><div class="ob-sub">Site-aware assistant</div></div><button class="ob-close" id="obClose" aria-label="Close chat">×</button></div>
+    <p class="ob-intro">Ask about this website. Ask in Persian or English.</p>
+  </header>
+  <main class="ob-log" id="obLog" aria-live="polite">
+    <div class="ob-msg bot">Welcome. I’m the website assistant. What would you like to explore?</div>
+  </main>
+  <div class="ob-typing" id="obTyping">Thinking…</div>
+  <div class="ob-chips">
+    <button class="ob-chip" data-prompt="Summarize this page">Summarize this page</button>
+    <button class="ob-chip" data-prompt="What can I do on this website?">Website features</button>
+    <button class="ob-chip" data-prompt="Where should I start?">Where to start</button>
+  </div>
+  <footer class="ob-compose">
+    <form class="ob-form" id="obForm"><textarea class="ob-input" id="obInput" rows="1" maxlength="4000" placeholder="Message the assistant…" aria-label="Message" required></textarea><button class="ob-send" id="obSend" aria-label="Send message">↑</button></form>
+    <div class="ob-foot">Don’t submit passwords or sensitive data</div>
+  </footer>
+</section>
+<script>
+(()=>{
+  'use strict';
+  // Direct Gemini connection (private/internal use only: the key is visible in the page source).
+  const GEMINI_API_KEY = 'AQ.Ab8RN6KB3xxoGDYSCgdeOpdPZecjX43PGbmGEy9_KnfFeY3Cdg';
+  const GEMINI_MODEL = 'gemini-2.5-flash';
+  const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent';
+  const SYSTEM_PROMPT = 'You are Oblivion Intelligence, the assistant of the Oblivion website (AI and game development team led by Bardiya Shokri; first official project: ANGRA). Answer helpfully and concisely, and always reply in the same language the user writes in (Persian or English).';
+  const MAX_HISTORY = 12;
+  const launch=document.getElementById('obLaunch'), panel=document.getElementById('obChat');
+  const close=document.getElementById('obClose'), log=document.getElementById('obLog');
+  const form=document.getElementById('obForm'), input=document.getElementById('obInput');
+  const send=document.getElementById('obSend'), typing=document.getElementById('obTyping');
+  const history=[];
+  function toggle(open){panel.classList.toggle('open',open);launch.setAttribute('aria-expanded',String(open));if(open)input.focus();}
+  launch.addEventListener('click',()=>toggle(!panel.classList.contains('open')));
+  close.addEventListener('click',()=>toggle(false));
+  function addMessage(text,who){const el=document.createElement('div');el.className='ob-msg '+who;el.textContent=text;log.appendChild(el);log.scrollTop=log.scrollHeight;return el;}
+  async function ask(text){
+    text=text.trim();if(!text||send.disabled)return;
+    addMessage(text,'user');history.push({role:'user',content:text});while(history.length>MAX_HISTORY)history.shift();
+    input.value='';send.disabled=true;typing.classList.add('show');
+    try{
+      const pageInfo='Current page: '+document.title+' ('+location.href+'). '+(document.querySelector('meta[name="description"]')?.content||'')+' Visible page text: '+document.body.innerText.replace(/\s+/g,' ').slice(0,3000);
+      const contents=history.map(m=>({role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}));
+      const response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':GEMINI_API_KEY},body:JSON.stringify({
+        systemInstruction:{parts:[{text:SYSTEM_PROMPT+'\n\n'+pageInfo}]},
+        contents,
+        generationConfig:{temperature:0.7,maxOutputTokens:1024}
+      })});
+      if(!response.ok){let d='';try{d=(await response.json()).error?.message||''}catch(e){}throw new Error('Gemini error ('+response.status+'): '+d);}
+      const json=await response.json();
+      const data={reply:(json.candidates?.[0]?.content?.parts||[]).map(p=>p.text||'').join('')};
+      if(typeof data.reply!=='string'||!data.reply.trim())throw new Error('The assistant returned an empty response.');
+      history.push({role:'assistant',content:data.reply});while(history.length>MAX_HISTORY)history.shift();
+      addMessage(data.reply,'bot');
+    }catch(err){
+      const msg=err instanceof TypeError?'Could not reach the Gemini service. Check your internet connection.':err.message;
+      addMessage(msg,'bot');
+    }finally{typing.classList.remove('show');send.disabled=false;input.focus();}
+  }
+  form.addEventListener('submit',e=>{e.preventDefault();ask(input.value);});
+  document.querySelectorAll('.ob-chip').forEach(b=>b.addEventListener('click',()=>ask(b.dataset.prompt)));
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();form.requestSubmit();}});
+})();
+</script>
+</body>
+</html>
+
